@@ -10,7 +10,26 @@ const publish = async (data) => {
     await fs.writeFile(dataFile, JSON.stringify(data));
 };
 
+const generateUser = (userData) => {
+    const user = {
+        email: '',
+        name: '',
+        dateOfBirth: '',
+        phoneNumber: '',
+        address: {
+            street: '',
+            city: '',
+            state: '',
+            zipCode: '',
+            country: '',
+        },
+        ...userData
+    };
+    return user;
+};
+
 module.exports = {
     users,
-    publish
+    publish,
+    generateUser
 };
