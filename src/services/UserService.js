@@ -1,13 +1,16 @@
 const {users, publish} = require('../utils/dataUtils.js');
-
+const {paginate} = require('../middleware/pagination.js');
 // Helper function
 const findUserIndex = (array, email) => {
-    console.log('fuckkkk', array)
     return array.findIndex(user => user.email === email);
 };
 
+// TODO: integrate pagination into the correct request handling pipeline pattern with (req, res, next)
 const getUsers = async (req, res) => {
-    res.status(200).json(await users());
+    const {page, limit} = req.query;
+    const userList = (page && limit) ?
+        paginate(await users(), req.query) : await users();
+    res.status(200).json(userList);
 };
 
 const addUser = async (req, res) => {
