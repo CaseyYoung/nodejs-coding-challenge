@@ -1,33 +1,14 @@
 const router = require('express').Router();
-const userData = require('../../data/users.json');
+const UserService = require('../services/UserService.js');
 
-const users = [...userData];
-const findUserIndex = (email) => {
-    return users.findIndex(user => user.email === email);
-};
-router.get('/', (req, res) => {
-    res.status(200).json(users);
-});
+router.get('/', UserService.getUsers);
 
-router.post('/', (req, res) => {
-    users.push(req.body);
-    res.status(201).json(req.body);
-});
+router.post('/', UserService.addUser);
 
-router.get('/:email', (req, res) => {
-    res.status(200).json(users.find(user => user.email === req.params.email));
-});
+router.get('/:email', UserService.getUser);
 
-router.put('/:email', (req, res) => {
-    const userIndex = findUserIndex(req.params.email);
-    users.splice(userIndex, 1, req.body);
-    res.status(200).json(users[userIndex]);
-});
+router.put('/:email', UserService.updateUser);
 
-router.delete('/:email', (req, res) => {
-    const userIndex = findUserIndex(req.params.email);;
-    users.splice(userIndex, 1);
-    res.status(200).send(`User ${req.params.email} successfully deleted.`);
-});
+router.delete('/:email', UserService.deleteUser);
 
 module.exports = router;

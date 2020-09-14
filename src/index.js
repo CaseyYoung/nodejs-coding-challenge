@@ -1,5 +1,5 @@
 const express = require('express');
-const UserController = require('./controllers/userController.js');
+const UserController = require('./controllers/UserController.js');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', UserController);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('こんいちは、世界! (Hello World)');
 });
 
 app.listen(port, () => {
