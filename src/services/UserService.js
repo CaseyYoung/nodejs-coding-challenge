@@ -23,7 +23,7 @@ const getUsers = async (req, res) => {
 // TODO: integrate validation into the correct request handling middleware pattern with (req, res, next)
 const addUser = async (req, res) => {
     const userList = await users();
-    const userIndex = findUserIndex(userList, req.params.email);
+    const userIndex = findUserIndex(userList, req.body.email);
     const error = validate(req.body).error;
     if(userIndex > -1) {
         respond(res, 400, 'Bad Request: A user with that email already exists.');
