@@ -43,12 +43,11 @@ const updateUser = async (req, res) => {
     const userIndex = findUserIndex(userList, req.params.email);
     const user = generateUser(req.body);
 
-    userList.splice(userIndex, 1, user);
-    await publish(userList);
-
     if(userIndex === -1) {
         respond(res, 404, RESOURCE_NOT_FOUND);
     } else {
+        userList.splice(userIndex, 1, user);
+        await publish(userList);
         respond(res, 200, user);
     };
 };
@@ -56,13 +55,12 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const userList = await users();
     const userIndex = findUserIndex(userList, req.params.email);
-    
-    userList.splice(userIndex, 1);
-    await publish(userList);
 
     if(userIndex === -1) {
         respond(res, 404, RESOURCE_NOT_FOUND);
     } else {
+        userList.splice(userIndex, 1);
+        await publish(userList);
         respond(res, 200, `User ${req.params.email} successfully deleted.`);
     };
 };
